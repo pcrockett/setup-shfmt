@@ -24,7 +24,7 @@ jobs:
           persist-credentials: false
 
       - uses: pcrockett/setup-yamlfmt@2949e59bb1f6d24f519d0dfa2560a0dbcd563fcc  # v0.1.1
-      - uses: pcrockett/setup-just@v0.1.1
+      - uses: pcrockett/setup-just@bfd0f2be2991d96e39d8d4c3bba4018d44857339  # v0.1.0
       - name: Setup shfmt
         uses: ./
 

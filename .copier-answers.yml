@@ -1,0 +1,11 @@
+_commit: 23c8344
+_src_path: gh:pcrockett/template-setup-action
+action_description: Installs shfmt in your GitHub Actions workflows
+action_human_friendly_name: Setup shfmt
+action_name: setup-shfmt
+github_org: pcrockett
+tool_doc_url: https://github.com/mvdan/sh
+tool_download_url: https://github.com/mvdan/sh/releases/download/v${VERSION}/shfmt_v${VERSION}_linux_amd64
+tool_latest_checksum: fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1
+tool_latest_version: 3.13.1
+tool_name: shfmt

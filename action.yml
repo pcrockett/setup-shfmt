@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://www.schemastore.org/github-action.json
+
+name: 'Setup shfmt'
+description: 'Installs shfmt in your GitHub Actions workflows'
+inputs:
+  version:
+    description: 'Version to install, ex: 3.13.1'
+    default: '3.13.1'
+  checksum:
+    description: 'SHA256 checksum of download artifact'
+    default: 'fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1'
+
+runs:
+  using: "composite"
+  steps:
+    - id: cache
+      name: Cache
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
+      with:
+        path: ~/.cache/setup-shfmt
+        key: setup-shfmt-1|${{ inputs.version }}|${{ inputs.checksum }}
+
+    - name: Download shfmt
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
+        CHECKSUM: ${{ inputs.checksum }}
+      run: |
+        mkdir -p ~/.cache/setup-shfmt
+        "${GITHUB_ACTION_PATH}/download-artifact.sh" \
+          "https://github.com/mvdan/sh/releases/download/v${VERSION}/shfmt_v${VERSION}_linux_amd64" \
+          ~/.cache/setup-shfmt/artifact \
+          "${CHECKSUM}"
+
+    - name: Install shfmt
+      shell: bash
+      run: |
+        install_dir=~/.local/bin
+        mkdir -p "${install_dir}"
+        cd ~/.cache/setup-shfmt
+        chmod +x artifact
+        cp artifact "${install_dir}/shfmt"
+        echo "${install_dir}" >>"${GITHUB_PATH}"
